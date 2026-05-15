@@ -25,7 +25,7 @@ The findings challenge conventional wisdom: hold time has zero statistical effec
 
 ## 🖥️ Live Demo
 
-🔗 **[View the live dashboard →](https://aj-sneaker-dash.streamlit.app)**
+🔗 **[View the live dashboard →](https://airjordan-resale-intelligence.streamlit.app/)**
 
 Upload the dataset from [Kaggle](https://www.kaggle.com/datasets/abdullahmeo/air-jordan-sneaker-market-and-resale-data2023-2026) in the sidebar to explore all features.
 
