@@ -207,7 +207,7 @@ This project is licensed under the MIT License — see [LICENSE](LICENSE) for de
 
 **Your Name**
 - GitHub: [@maneet-999](https://github.com/maneet-999)
-- LinkedIn: [linkedin.com/in/maneet_gupta999] (linkedin.com/in/maneet-gupta999)
+- LinkedIn: [linkedin.com/in/maneet-gupta999](https://www.linkedin.com/in/maneet-gupta999)
 - Email: 2543maneet@gmail.com
 
 ---
