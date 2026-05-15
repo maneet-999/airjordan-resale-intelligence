@@ -1,0 +1,68 @@
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# ─── Virtual Environments ─────────────────────────────────────────────────────
+venv/
+env/
+ENV/
+.env
+.venv
+venv.bak/
+
+# ─── Data Files (do not commit raw or cleaned data) ──────────────────────────
+*.csv
+*.xlsx
+*.xls
+*.json
+!sample_data.csv          # allow sample only if you add one intentionally
+
+# ─── Output Files ─────────────────────────────────────────────────────────────
+*.png
+*.jpg
+*.jpeg
+!assets/                  # allow assets folder screenshots
+
+# ─── Streamlit ────────────────────────────────────────────────────────────────
+.streamlit/secrets.toml   # never commit API keys or secrets
+
+# ─── Jupyter Notebooks ────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── IDEs & Editors ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# ─── Distribution / Packaging ─────────────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# ─── Testing ──────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+*.test
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ─── OS Files ─────────────────────────────────────────────────────────────────
+.DS_Store
+desktop.ini
