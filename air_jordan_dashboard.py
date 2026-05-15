@@ -36,12 +36,12 @@ plt.rcParams.update({"figure.facecolor": BG, "axes.facecolor": BG,
 # ══════════════════════════════════════════════
 
 @st.cache_data(show_spinner="Cleaning data …")
-def load_and_clean(path) -> pd.DataFrame:
+def load_and_clean(uploaded_file) -> pd.DataFrame:
     import io
-    if hasattr(path, "read"):
-        df = pd.read_csv(io.BytesIO(path.read()))
+    if isinstance(uploaded_file, str):
+        df = pd.read_csv(uploaded_file)
     else:
-        df = pd.read_csv(path)
+        df = pd.read_csv(io.BytesIO(uploaded_file.getvalue()))
     df.columns = (df.columns
                     .str.strip()
                     .str.lower()
@@ -257,13 +257,8 @@ def main():
     # ── File uploader ─────────────────────────────────────────────────────────
     uploaded = st.sidebar.file_uploader("Upload your Kaggle CSV", type=["csv"])
     if uploaded is None:
-    # Auto-load bundled CSV if no file uploaded
-            try:
-                uploaded = "air_jordan_data.csv"   # must match your CSV filename in repo
-                st.sidebar.success("Auto-loaded dataset")
-            except:
-                st.info("👈 Upload the Air Jordan CSV to begin.")
-                st.stop()
+        st.info("👈 Upload the Air Jordan CSV from Kaggle to begin.")
+        st.stop()
 
     df_raw = load_and_clean(uploaded)
     df     = add_segments(df_raw.copy())
