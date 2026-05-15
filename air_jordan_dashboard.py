@@ -37,8 +37,11 @@ plt.rcParams.update({"figure.facecolor": BG, "axes.facecolor": BG,
 
 @st.cache_data(show_spinner="Cleaning data …")
 def load_and_clean(path) -> pd.DataFrame:
-    df = pd.read_csv(path)
-
+    import io
+    if hasattr(path, "read"):
+        df = pd.read_csv(io.BytesIO(path.read()))
+    else:
+        df = pd.read_csv(path)
     df.columns = (df.columns
                     .str.strip()
                     .str.lower()
