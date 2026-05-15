@@ -26,7 +26,7 @@ venv.bak/
 *.png
 *.jpg
 *.jpeg
-!assets/                  # allow assets folder screenshots
+!assets/*.png                  # allow assets folder screenshots
 
 # ─── Streamlit ────────────────────────────────────────────────────────────────
 .streamlit/secrets.toml   # never commit API keys or secrets
