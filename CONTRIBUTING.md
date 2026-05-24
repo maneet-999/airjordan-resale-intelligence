@@ -11,7 +11,7 @@ Click the **Fork** button at the top right of the repository page.
 
 ### 2. Clone Your Fork
 ```bash
-git clone https://github.com/your-username/airjordan-resale-intelligence.git
+git clone https://github.com/maneet-999/airjordan-resale-intelligence.git
 cd airjordan-resale-intelligence
 ```
 
