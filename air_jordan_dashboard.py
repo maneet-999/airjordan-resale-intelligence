@@ -75,16 +75,16 @@ html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {{
     color: {TEXT_PRI};
     font-family: 'DM Sans', sans-serif;
 }}
-[data-testid="stSidebar"] {{
+[data-testid="stSidebar"][aria-expanded="true"] {{
     background-color: #0a0a0a !important;
     border-right: 1px solid {BORDER};
 }}
-[data-testid="stSidebar"] * {{ color: {TEXT_PRI} !important; }}
-[data-testid="stSidebar"] .stSelectbox label,
-[data-testid="stSidebar"] .stDateInput label {{
+[data-testid="stSidebar"][aria-expanded="true"] * {{ color: {TEXT_PRI} !important; }}
+[data-testid="stSidebar"][aria-expanded="true"] .stSelectbox label,
+[data-testid="stSidebar"][aria-expanded="true"] .stDateInput label {{
     color: {TEXT_SEC} !important; font-size: 0.75rem !important;
 }}
-section[data-testid="stSidebar"] {{ padding-top: 1rem; }}
+section[data-testid="stSidebar"][aria-expanded="true"] {{ padding-top: 1rem; }}
 .stFileUploader {{ background: {BG_CARD} !important; border: 1px solid {BORDER} !important; border-radius: 6px; }}
 .stFileUploader label {{ color: {TEXT_SEC} !important; font-size: 0.8rem !important; }}
 
@@ -252,6 +252,14 @@ section[data-testid="stSidebar"] {{ padding-top: 1rem; }}
 #MainMenu, footer, header {{ visibility: hidden; }}
 [data-testid="stDecoration"] {{ display: none; }}
 .stApp > header {{ height: 0; }}
+/* re-expand button lives in the header — make it visible and clickable */
+[data-testid="stExpandSidebarButton"] {{
+    visibility: visible !important;
+    position: fixed !important;
+    top: 0.5rem !important;
+    left: 0.5rem !important;
+    z-index: 999999 !important;
+}}
 div.block-container {{ padding-top: 1.2rem; padding-bottom: 1rem; max-width: 1400px; }}
 
 /* plotly chart container */
@@ -957,24 +965,32 @@ with tab1:
             if not monthly.empty:
                 metric_col = "resale_price" if "resale_price" in monthly.columns else monthly.columns[1]
                 x_labels = [str(m) for m in monthly["sale_month"]]
-                y_vals   = monthly[metric_col].tolist()
-                fig_month = segmented_bar_chart(x_labels, y_vals, height=200)
-                step = max(1, len(x_labels) // 6)
+                # reformat "YYYY-MM" -> "Mon 'YY" for readability
+                import datetime as _dt
+                def _fmt(s):
+                    try:    return _dt.datetime.strptime(s, "%Y-%m").strftime("%b '%y")
+                    except: return s
+                x_display = [_fmt(lbl) for lbl in x_labels]
+                y_vals    = monthly[metric_col].tolist()
+                fig_month = segmented_bar_chart(x_display, y_vals, height=200)
+                # tickvals must match the actual category strings used in the chart
+                step = max(1, len(x_display) // 8)
+                tick_vals = [x_display[i] for i in range(0, len(x_display), step)]
                 fig_month.update_xaxes(
-                    tickvals=list(range(0, len(x_labels), step)),
-                    ticktext=[x_labels[i] for i in range(0, len(x_labels), step)],
-                    tickangle=-30,
-                    title_text="Month",
-                    title_font=dict(size=9, color=TEXT_MUTED),
-                    title_standoff=8,
+                    tickvals=tick_vals,
+                    ticktext=tick_vals,
+                    tickangle=-45,
+                    tickfont=dict(size=8, color=TEXT_MUTED),
+                    title_text=None,
                     automargin=True,
                 )
                 fig_month.update_yaxes(
-                    title_text="Avg Resale Price ($)",
+                    title_text="Avg $",
                     title_font=dict(size=9, color=TEXT_MUTED),
-                    title_standoff=8,
+                    title_standoff=4,
                     automargin=True,
                 )
+                fig_month.update_layout(margin=dict(l=12, r=12, t=28, b=48))
                 st.plotly_chart(fig_month, use_container_width=True, config={"displayModeBar": False})
             else:
                 st.caption("No sale_date column found.")
